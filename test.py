@@ -5,12 +5,30 @@ class Restaurant:           # represent the restaurant establishment.
         self.address = address
         self.phone_number = phone_number
         self.menu = menu
+        self.tables = []
         pass
 
-#     a. add_table() to add new tables to the restaurant's table list.
-#     b. list_tables() to display a list of all available tables.
-#     c. reserve_table() to accept a reservation request, checking 
-# availability and updating the Table and Reservation objects accordingly.
+    def add_table(self, table):
+        self.tables.append(table)
+
+    def list_tables(self):
+        for table in self.tables:
+            print(table)
+
+    def reserve_table(self, customer_name, party_size, reservation_time):
+        available_tables = [table for table in self.tables if table.is_available()]
+        if not available_tables:
+            print("Sorry, no tables available.")
+            return
+
+        for table in available_tables:
+            if table.capacity >= party_size:
+                table.mark_unavailable()
+                reservation = Reservation(customer_name, party_size, reservation_time, table.table_number)
+                print(f"Reservation confirmed: {reservation}")
+                return
+
+        print("Sorry, no tables available that can accommodate your party size.")
 
     
 class Table:                # represent individual tables in the restaurant.
