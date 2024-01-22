@@ -8,7 +8,7 @@ class Restaurant:           # represent the restaurant establishment.
         self.tables = []
         pass
 
-    def add_table(self, table):
+    def add_table(self, table,):
         self.tables.append(table)
 
     def list_tables(self):
@@ -38,9 +38,21 @@ class Table:                # represent individual tables in the restaurant.
         self.availability = availability
     pass
 
-#     a. is_available() to check if the table is available for a particular reservation time.
-#     b. mark_available() to set the table's availability to true.
-#     c. mark_unavailable() to set the table's availability to false.
+    def is_available(self, reservation_time):
+        return self.availability and not self.has_reservation(reservation_time)
+
+    def mark_available(self):
+        self.availability = True
+
+    def mark_unavailable(self):
+        self.availability = False
+
+    def has_reservation(self, reservation_time):
+        for reservation in restaurant.reservations:
+            if reservation.table_id == self.table_number and reservation.reservation_time == reservation_time:
+                return True
+        return False
+
 
 class Reservation:          # represent individual customer reservations
     def __init__(self, customer_name, party_size, reservation_time, table_id):
